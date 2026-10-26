@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Authorization callback — Wick Studios</title>
+<style>body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;max-width:720px;margin:40px auto;padding:0 20px;line-height:1.6;color:#222}h1{font-size:1.4em}code{display:block;background:#f4f4f4;border:1px solid #ddd;border-radius:6px;padding:12px;word-break:break-all}button{margin-top:12px;padding:8px 16px;font-size:1em;cursor:pointer}.err{color:#b00}</style>
+</head>
+<body>
+<h1>Wick Studios — TikTok authorization callback</h1>
+<p id="msg">Waiting for TikTok to return an authorization code…</p>
+<code id="code" style="display:none"></code>
+<button id="copy" style="display:none">Copy code</button>
+<p class="err" id="err" style="display:none"></p>
+<script>
+var p = new URLSearchParams(window.location.search);
+var code = p.get('code'), err = p.get('error');
+if (code) {
+  document.getElementById('msg').textContent = 'Authorization succeeded. Copy this code into the Wick Studios connector setup:';
+  var el = document.getElementById('code');
+  el.textContent = code; el.style.display = 'block';
+  var b = document.getElementById('copy'); b.style.display = 'inline-block';
+  b.onclick = function () { navigator.clipboard.writeText(code); b.textContent = 'Copied'; };
+} else if (err) {
+  document.getElementById('msg').textContent = 'Authorization did not complete.';
+  var e = document.getElementById('err');
+  e.textContent = 'Error: ' + err; e.style.display = 'block';
+}
+</script>
+</body>
+</html>
